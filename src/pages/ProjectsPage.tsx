@@ -20,9 +20,12 @@ export default function ProjectsPage() {
         action={<CreateButton onClick={handleCreateProject} label="New Project" />}
       />
       
-      <div className="space-y-8">
-        <ProjectsMap />
-        <ProjectsList />
+      <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
+        <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Projects</h1>
+        <div className="space-y-8 mt-4">
+          <ProjectsMap />
+          <ProjectsList />
+        </div>
       </div>
 
       <ProjectForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />

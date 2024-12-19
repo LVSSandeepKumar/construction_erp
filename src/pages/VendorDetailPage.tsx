@@ -156,6 +156,13 @@ export default function VendorDetailPage() {
         description="Detailed overview of vendor's projects and payment status"
       />
 
+      <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
+        <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Vendor Details</h1>
+        <ul className="space-y-3 mt-4">
+          {/* Add vendor detail content here */}
+        </ul>
+      </div>
+
       <div>
         <h2 className="text-xl font-semibold mb-4">Active Projects</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -167,7 +174,7 @@ export default function VendorDetailPage() {
 
       <div>
         <h2 className="text-xl font-semibold mb-4">Bills Status</h2>
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

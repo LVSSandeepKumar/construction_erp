@@ -58,10 +58,15 @@ export default function VendorsPage() {
         action={<CreateButton onClick={handleCreateVendor} label="Add Vendor" />}
       />
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {vendors.map(vendor => (
-          <VendorCard key={vendor.id} vendor={vendor} />
-        ))}
+      <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
+        <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Vendors</h1>
+        <ul className="space-y-3 mt-4">
+          {vendors.map(vendor => (
+            <li key={vendor.id}>
+              <VendorCard vendor={vendor} />
+            </li>
+          ))}
+        </ul>
       </div>
 
       <VendorForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />

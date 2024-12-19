@@ -73,31 +73,29 @@ export default function NotificationsPage() {
         action={<CreateButton onClick={handleReadAll} label="Read All" />}
       />
       
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className='p-6'>
-          <h1 className='font-bold text-2xl'>Alerts</h1>
-          <ul className="space-y-3 mt-4">
-            {notifications.map(notification => (
-              <li 
-                key={notification.id} 
-                className={`flex items-center p-4 rounded-lg transition-colors ${
-                  notification.isRead ? 'bg-gray-50' : 'bg-blue-50'
-                } hover:bg-gray-100`}
-              >
-                <div className="flex-shrink-0 mr-4">
-                  {getIcon(notification.type)}
+      <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
+        <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Notifications</h1>
+        <ul className="space-y-3 mt-4">
+          {notifications.map(notification => (
+            <li 
+              key={notification.id} 
+              className={`flex items-center p-4 rounded-lg transition-colors ${
+                notification.isRead ? 'bg-gray-50' : 'bg-blue-50'
+              } hover:bg-gray-100`}
+            >
+              <div className="flex-shrink-0 mr-4">
+                {getIcon(notification.type)}
+              </div>
+              <div className="flex-grow">
+                <div className="flex justify-between items-start">
+                  <span className="font-medium text-gray-900">{notification.title}</span>
+                  <span className="text-sm text-gray-500">{notification.date}</span>
                 </div>
-                <div className="flex-grow">
-                  <div className="flex justify-between items-start">
-                    <span className="font-medium text-gray-900">{notification.title}</span>
-                    <span className="text-sm text-gray-500">{notification.date}</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+                <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

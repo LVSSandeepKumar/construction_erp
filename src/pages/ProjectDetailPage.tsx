@@ -185,56 +185,59 @@ export default function ProjectDetailPage() {
         description="Detailed overview of project status, officials, and vendors"
       />
 
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Project Officials</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projectData.officials.map((official, index) => (
-            <OfficialCard key={index} {...official} />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Bills Status</h2>
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pending With</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {projectData.bills.map((bill) => (
-                <tr key={bill.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{bill.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{bill.description}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${bill.amount.toLocaleString()}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      bill.status === 'Approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {bill.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{bill.pendingWith}</td>
-                </tr>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
+        <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Project Details</h1>
+        <ul className="space-y-3 mt-4">
+          <li>
+            <h2 className="text-xl font-semibold mb-4">Project Officials</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {projectData.officials.map((official, index) => (
+                <OfficialCard key={index} {...official} />
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Project Vendors</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {projectData.vendors.map(vendor => (
-            <VendorCard key={vendor.id} vendor={vendor} />
-          ))}
-        </div>
+            </div>
+          </li>
+          <li>
+            <h2 className="text-xl font-semibold mb-4">Bills Status</h2>
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pending With</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {projectData.bills.map((bill) => (
+                    <tr key={bill.id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{bill.date}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{bill.description}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${bill.amount.toLocaleString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          bill.status === 'Approved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {bill.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{bill.pendingWith}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </li>
+          <li>
+            <h2 className="text-xl font-semibold mb-4">Project Vendors</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {projectData.vendors.map(vendor => (
+                <VendorCard key={vendor.id} vendor={vendor} />
+              ))}
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import PageHeader from '../components/common/PageHeader';
 import CreateButton from '../components/common/CreateButton';
+import QrReader from 'react-qr-reader';
+import { toast } from 'react-toastify';
+import Modal from '../components/common/Modal'; // Assuming Modal component is in this location
 
 export default function BillsPage() {
   const mockBills = [
@@ -9,131 +12,65 @@ export default function BillsPage() {
   ];
 
   const [bills, setBills] = useState(mockBills);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    amount: '',
-    dueDate: ''
-  });
+  const [scanning, setScanning] = useState(false);
 
   const addBill = (newBill: { id: number; name: string; amount: number; dueDate: string; }) => {
     setBills([...bills, newBill]);
-    setIsModalOpen(false);
-    setFormData({ name: '', amount: '', dueDate: '' });
+    setScanning(false);
+    toast.success('Bill updated successfully!');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newBill = {
-      id: bills.length + 1,
-      name: formData.name,
-      amount: parseFloat(formData.amount),
-      dueDate: formData.dueDate
-    };
-    addBill(newBill);
+  const handleCamera = () => {
+    setScanning(true);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleScan = (data: any) => {
+    if (data) {
+      const newBill = {
+        id: bills.length + 1,
+        name: 'Scanned Bill',
+        amount: 0,
+        dueDate: new Date().toISOString().split('T')[0]
+      };
+      addBill(newBill);
+    }
+  };
+
+  const handleError = (err: any) => {
+    console.error(err);
   };
 
   return (
-    <>
+    <div className="max-w-screen-md mx-auto p-4 md:p-6 lg:p-8">
       <PageHeader 
         title="Bill Management" 
         description="Track and manage all pending and approved bills"
-        action={<CreateButton onClick={() => setIsModalOpen(true)} label="Add Bill" />}
+        action={<CreateButton onClick={handleCamera} label="Add Bill" />}
       />
       
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className='p-6'>
-          <h1 className='font-bold text-2xl'>Bills</h1>
-          <ul className="space-y-3 mt-4">
-            {bills.map(bill => (
-              <li key={bill.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                <div className="flex flex-col">
-                  <span className="font-medium text-gray-900">{bill.name}</span>
-                  <span className="text-sm text-gray-500">Due: {bill.dueDate}</span>
-                </div>
-                <span className="text-lg font-semibold text-green-600">${bill.amount}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden w-full mx-auto p-4 md:p-6 lg:p-8">
+        <h1 className='font-bold text-lg md:text-xl lg:text-2xl'>Bills</h1>
+        <ul className="space-y-3 mt-4">
+          {bills.map(bill => (
+            <li key={bill.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+              <div className="flex flex-col">
+                <span className="font-medium text-gray-900 text-sm md:text-base lg:text-lg">{bill.name}</span>
+                <span className="text-xs md:text-sm lg:text-base text-gray-500">Due: {bill.dueDate}</span>
+              </div>
+              <span className="text-lg md:text-xl lg:text-2xl font-semibold text-green-600">${bill.amount}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Add New Bill</h2>
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Bill Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
-                <input
-                  type="number"
-                  id="amount"
-                  name="amount"
-                  value={formData.amount}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">Due Date</label>
-                <input
-                  type="date"
-                  id="dueDate"
-                  name="dueDate"
-                  value={formData.dueDate}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  required
-                />
-              </div>
-              <div className="flex justify-end space-x-3 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-                >
-                  Add Bill
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </>
+      <Modal isOpen={scanning} onClose={() => setScanning(false)} title="Scan QR Code">
+        <QrReader
+          delay={300}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+        />
+      </Modal>
+    </div>
   );
 }

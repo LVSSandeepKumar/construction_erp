@@ -133,10 +133,15 @@ export default function ProjectsList() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {projects.map((project, index) => (
-        <ProjectCard key={index} project={project} />
-      ))}
+    <div className="bg-white rounded-lg shadow-md overflow-hidden md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto p-4 sm:p-6 md:p-8">
+      <h1 className='font-bold text-lg sm:text-xl md:text-2xl'>Projects List</h1>
+      <ul className="space-y-3 mt-4">
+        {projects.map((project, index) => (
+          <li key={index}>
+            <ProjectCard project={project} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
